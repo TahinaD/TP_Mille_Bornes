@@ -4,7 +4,7 @@ public class Borne extends Carte {
 
 	private int km;
 
-	private Borne(int km) {
+	public Borne(int km) {
 		this.km = km;
 	}
 	
