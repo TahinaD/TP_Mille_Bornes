@@ -47,13 +47,28 @@ public class JeuDeCartes {
 	public String affichageJeuDeCartes() {
 		StringBuilder affichageJeu = new StringBuilder();
 		for (Configuration configuration : typesDeCartes) {
-			affichageJeu.append(configuration.toString());
+			affichageJeu.append(configuration.getNbExemplaires() + " ");
+			affichageJeu.append(configuration.getCarte().toString() + " | ");
 		}
 		return affichageJeu.toString();
 	}
 	
 	public Carte[] donnerCartes() {
+		int nbCartes = 0;
+		for (Configuration configuration : typesDeCartes) {
+			nbCartes += configuration.getNbExemplaires();
+		}
 		
+		Carte[] jeuComplet = new Carte[nbCartes];
+		int indiceCarte = 0;
+		for (Configuration configuration : typesDeCartes) {
+			int nbCartesTypes = configuration.getNbExemplaires();
+			for (int i = 0; i < nbCartesTypes; i++) {
+				jeuComplet[indiceCarte + i] = configuration.getCarte();
+			}
+			indiceCarte += nbCartesTypes;
+		}
+		return jeuComplet;
 	}
 
 }
