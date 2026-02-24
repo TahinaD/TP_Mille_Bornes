@@ -70,5 +70,18 @@ public class JeuDeCartes {
 		}
 		return jeuComplet;
 	}
+	
+	public boolean checkCount() {
+		Carte[] jeutest = donnerCartes();
+		int indiceCarte = 0;
+		for (Configuration typeConfig : typesDeCartes) {
+			for (int i = 0; i < typeConfig.getNbExemplaires(); i++) {
+				if (!(jeutest[indiceCarte].equals(typeConfig.getCarte())))
+					return false;
+				indiceCarte++;
+			}
+		}
+		return true;
+	}
 
 }

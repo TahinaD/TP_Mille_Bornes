@@ -12,6 +12,7 @@ public class TestJeuDeCartes {
 		for (Carte carte : jeuComplet) {
 			System.out.println(carte.toString());
 		}
+		System.out.println("Jeu bien configuré ? " + nouveauJeu.checkCount());
 	}
 
 }
