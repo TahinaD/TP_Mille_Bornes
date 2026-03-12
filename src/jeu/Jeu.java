@@ -14,9 +14,10 @@ public class Jeu {
 	public Jeu(Sabot sabot) {
 		JeuDeCartes nouveauJeu = new JeuDeCartes();
 		Carte[] jeuComplet = nouveauJeu.donnerCartes();
-		List<Carte> listeCartes = listeCartes.toArray(jeuComplet);
+		List<Carte> listeCartes = new ArrayList<>(); 
+		Collections.addAll(listeCartes, jeuComplet);
 		GestionCartes.mélanger(listeCartes);
-		Carte[] jeuDepart = Collections.addAll(listeCartes);;
+		Carte[] jeuDepart = listeCartes.toArray(new Carte[jeuComplet.length]);;
 		this.sabot = new Sabot(jeuDepart);
 	}
 }
