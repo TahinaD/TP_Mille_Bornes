@@ -8,7 +8,6 @@ import cartes.Carte;
 
 public class Sabot implements Iterable<Carte>{
 	private int nbCartes;
-	private int capacite;
 	private Carte[] pioche;
 	private int nombreOperations = 0;
 	
@@ -20,7 +19,6 @@ public class Sabot implements Iterable<Carte>{
 	public Sabot(Carte[] pioche) {
 		this.pioche = pioche;
 		this.nbCartes = pioche.length;
-		this.capacite = pioche.length;
 	}
 	
 	public boolean estVide() {
@@ -28,7 +26,7 @@ public class Sabot implements Iterable<Carte>{
 	}
 	
 	public void ajouterCarte(Carte carte) {
-		if (nbCartes > capacite)
+		if (nbCartes > pioche.length)
 			throw new IllegalStateException();
 		else {
 			pioche[nbCartes] = carte;

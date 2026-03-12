@@ -7,8 +7,4 @@ public class DebutLimite extends Limite {
 		return "Limite de vitesse";
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		return (obj instanceof DebutLimite);
-	}
 }

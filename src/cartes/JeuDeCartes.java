@@ -47,8 +47,10 @@ public class JeuDeCartes {
 	public String affichageJeuDeCartes() {
 		StringBuilder affichageJeu = new StringBuilder();
 		for (Configuration configuration : typesDeCartes) {
-			affichageJeu.append(configuration.getNbExemplaires() + " ");
-			affichageJeu.append(configuration.getCarte().toString() + " | ");
+			affichageJeu.append(configuration.getNbExemplaires());
+			affichageJeu.append(" ");
+			affichageJeu.append(configuration.getCarte());
+			affichageJeu.append(" | ");
 		}
 		return affichageJeu.toString();
 	}
