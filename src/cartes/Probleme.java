@@ -12,6 +12,7 @@ public abstract class Probleme extends Carte {
 	}
 	
 	@Override
+	//TODO simplifier equals
 	public boolean equals(Object obj) {
 		if (obj instanceof Probleme carte)
 			return (getClass().equals(obj.getClass()) && getType().equals(carte.type));
