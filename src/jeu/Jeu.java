@@ -11,7 +11,7 @@ import utils.GestionCartes;
 public class Jeu {
 	Sabot sabot;
 
-	public Jeu(Sabot sabot) {
+	public Jeu() {
 		JeuDeCartes nouveauJeu = new JeuDeCartes();
 		Carte[] jeuComplet = nouveauJeu.donnerCartes();
 		List<Carte> listeCartes = new ArrayList<>(); 
