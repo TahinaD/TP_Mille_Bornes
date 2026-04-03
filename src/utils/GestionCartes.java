@@ -7,45 +7,48 @@ import java.util.ListIterator;
 import java.util.Random;
 
 public class GestionCartes {
-	public static <Elem> Elem extraireList(List<Elem> list) {
-		Random rand = new Random();
+	private static Random rand = new Random();
+	
+	private GestionCartes() {
+	}
+
+	public static <E> E extraireList(List<E> list) {
 		int iChoix = rand.nextInt(list.size());
-		Elem choix = list.get(iChoix);
+		E choix = list.get(iChoix);
 		list.remove(iChoix);
 		return choix;
 	}
 	
-	public static <Elem> Elem extraireListVIter(List<Elem> list) {
-		Random rand = new Random();
+	public static <E> E extraireListVIter(List<E> list) {
 		int iChoix = rand.nextInt(list.size());
-		ListIterator<Elem> iter = list.listIterator(iChoix);
-		Elem choix = iter.next();
+		ListIterator<E> iter = list.listIterator(iChoix);
+		E choix = iter.next();
 		iter.remove();
 		return choix;
 	}
 	
-	public static <Elem> List<Elem> mélanger(List<Elem> list) {
-		List<Elem> returnList = new ArrayList<>();
+	public static <E> List<E> melanger(List<E> list) {
+		List<E> returnList = new ArrayList<>();
 		while (!list.isEmpty())
 			returnList.add(extraireListVIter(list));
 		return returnList;
 	}
 	
-	public static <Elem> boolean verifierMelange(List<Elem> list1, List<Elem> list2) {
+	public static <E> boolean verifierMelange(List<E> list1, List<E> list2) {
 		if (list1.size() != list2.size())
 			return false;
 		for (int i = 0; i < list1.size(); i++) {
-			Elem elem = list1.get(i);
+			E elem = list1.get(i);
 			if (Collections.frequency(list1, elem) != Collections.frequency(list2, elem))
 				return false;
 		}
 		return true;
 	}
 	
-	public static <Elem> List<Elem> rassembler(List<Elem> list) {
-		List<Elem> returnList = new ArrayList<>();
+	public static <E> List<E> rassembler(List<E> list) {
+		List<E> returnList = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
-			Elem current = list.get(i);
+			E current = list.get(i);
 			if (!returnList.contains(current)) {
 				for (int j = 0; j < Collections.frequency(list, current); j++) {
 					returnList.add(current);
@@ -55,23 +58,21 @@ public class GestionCartes {
 		return returnList;
 	}
 	
-	private static <Elem> boolean sautDouble(Elem elem, int nextIndex, List<Elem> list) {
-		for (ListIterator<Elem> iter2 = list.listIterator(nextIndex); iter2.hasNext();) {
-			Elem nextElem = iter2.next();
+	private static <E> boolean sautDouble(E elem, int nextIndex, List<E> list) {
+		for (ListIterator<E> iter2 = list.listIterator(nextIndex); iter2.hasNext();) {
+			E nextElem = iter2.next();
 			if (nextElem == elem)
 				return true;
 		}
 		return false;
 	}
 	
-	public static <Elem> boolean verifierRassemblement(List<Elem> list) {
-		Elem elem = list.get(0);
-		for (ListIterator<Elem> iter1 = list.listIterator(); iter1.hasNext();) {
-			Elem nextElem = iter1.next();
-			if (nextElem != elem) {
-				if (sautDouble(elem, iter1.nextIndex(), list))
+	public static <E> boolean verifierRassemblement(List<E> list) {
+		E elem = list.get(0);
+		for (ListIterator<E> iter1 = list.listIterator(); iter1.hasNext();) {
+			E nextElem = iter1.next();
+			if (nextElem != elem && sautDouble(elem, iter1.nextIndex(), list))
 					return false;
-			}
 			elem = nextElem;
 		}
 		return true;

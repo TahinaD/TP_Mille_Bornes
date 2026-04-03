@@ -16,7 +16,7 @@ public class Jeu {
 		Carte[] jeuComplet = nouveauJeu.donnerCartes();
 		List<Carte> listeCartes = new ArrayList<>(); 
 		Collections.addAll(listeCartes, jeuComplet);
-		GestionCartes.mélanger(listeCartes);
+		GestionCartes.melanger(listeCartes);
 		Carte[] jeuDepart = listeCartes.toArray(new Carte[jeuComplet.length]);;
 		this.sabot = new Sabot(jeuDepart);
 	}

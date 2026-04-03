@@ -1,6 +1,7 @@
 package testsFonctionnels;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,14 +14,12 @@ public class TestGestionCartes {
 		JeuDeCartes jeu = new JeuDeCartes();
 		List<Carte> listeCarteNonMelangee = new LinkedList<>();
 		
-		for (Carte carte : jeu.donnerCartes()) {
-			listeCarteNonMelangee.add(carte);
-		}
+		Collections.addAll(listeCarteNonMelangee, jeu.donnerCartes());
 		
 		List<Carte> listeCartes = new ArrayList<>(listeCarteNonMelangee);
 		System.out.println(listeCartes);
 		
-		listeCartes = GestionCartes.mélanger(listeCartes);
+		listeCartes = GestionCartes.melanger(listeCartes);
 		System.out.println(listeCartes);
 		System.out.println("liste melangee sans erreur ? " + GestionCartes.verifierMelange(listeCarteNonMelangee, listeCartes));
 		
