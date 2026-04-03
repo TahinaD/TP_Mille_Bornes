@@ -37,10 +37,8 @@ public class ZoneDeJeu {
 	
 	public int donnerKmParcourus() {
 		int totalBornes = 0;
-		for (Iterator<Borne> iterator = collectionBornes.iterator(); iterator.hasNext();) {
-			Borne borne = iterator.next();
-			totalBornes += 0;
-	    }
+		for (Iterator<Borne> iterator = collectionBornes.iterator(); iterator.hasNext();)
+			totalBornes += (iterator.next()).getKm();
 		return totalBornes;
 	}
 	
@@ -53,57 +51,74 @@ public class ZoneDeJeu {
 			collectionBornes.add((Borne) carte);
 	}
 	
+	private Limite sommetPileLimite() {
+		if (!pileLimites.isEmpty())
+			return pileLimites.get(pileLimites.size()-1);
+		return null;
+	}
+	
+	private Bataille sommetPileBataille() {
+		if (!pileBatailles.isEmpty())
+			return pileBatailles.get(pileBatailles.size()-1);
+		return null;
+	}
+	
 	public boolean peutAvancer() {
-		if (!pileBatailles.isEmpty()) {
-			Bataille batailleEnCours = pileBatailles.get(pileBatailles.size()-1);
-			if (batailleEnCours instanceof Parade)
+		Bataille batailleEnCours = sommetPileBataille();
+		if (batailleEnCours instanceof Parade)
 				return (batailleEnCours.getType() == Type.FEU);
-		}
 		return false;
 	}
 	
 	public boolean estDepotFeuVertAutorise() {
-		if (!pileBatailles.isEmpty()) {
-			Bataille batailleEnCours = pileBatailles.get(pileBatailles.size()-1);
-			if (batailleEnCours instanceof Attaque)
-				return (batailleEnCours.getType() == Type.FEU);
-			if (batailleEnCours instanceof Parade)
-				return (batailleEnCours.getType() != Type.FEU);
-		}
+		Bataille batailleEnCours = sommetPileBataille();
+		if (batailleEnCours instanceof Attaque)
+			return (batailleEnCours.getType() == Type.FEU);
+		if (batailleEnCours instanceof Parade)
+			return (batailleEnCours.getType() != Type.FEU);
 		return true;
 	}
 	
 	public boolean estDepotBorneAutorise(Borne borne) {
-		if (!pileBatailles.isEmpty()) {
-			Bataille batailleEnCours = pileBatailles.get(pileBatailles.size()-1);
+		Bataille batailleEnCours = pileBatailles.get(pileBatailles.size()-1);
 			if (!(batailleEnCours instanceof Attaque)) {
 				int limite = donnerLimitationVitesse();
 				int totalBorne = donnerKmParcourus();
-				int borneCarte = 0;
+				int borneCarte = borne.getKm();
 				return (borneCarte <= limite || totalBorne + borneCarte <= 1000);
 			}
-		}
 		return true;
 	}
 	
 	public boolean estDepotLimiteAutorise(Limite limite) {
-		if (limite instanceof DebutLimite) {
-			if (!pileLimites.isEmpty()) {
-				Limite limiteEnCours = pileLimites.get(pileLimites.size()-1);
-				return (limiteEnCours instanceof FinLimite);
-			}
-			return true;
-		}
-		if (limite instanceof FinLimite) {
-			if (!pileLimites.isEmpty()) {
-				Limite limiteEnCours = pileLimites.get(pileLimites.size()-1);
-				return (limiteEnCours instanceof DebutLimite);
-			}
-		}
+		if (limite instanceof DebutLimite)
+			return (sommetPileLimite() instanceof FinLimite);
+		if (limite instanceof FinLimite)
+			return (sommetPileLimite() instanceof DebutLimite);
 		return false;
 	}
 	
 	public boolean estDepotBatailleAutorise(Bataille bataille) {
+		Bataille batailleEnCours = sommetPileBataille();
+		if (bataille instanceof Attaque)
+			return !(batailleEnCours instanceof Attaque);
+		if (bataille instanceof Parade) {
+			if (bataille.getType() == Type.FEU) {
+				return estDepotFeuVertAutorise();
+			} else {
+				return (batailleEnCours instanceof Attaque && batailleEnCours.getType() == bataille.getType());
+			}
+		}
 		return true;
+	}
+	
+	public boolean estDepotAutorise(Carte carte) {
+		if (carte instanceof Borne)
+			return estDepotBorneAutorise((Borne) carte);
+		if (carte instanceof Limite)
+			return estDepotLimiteAutorise((Limite) carte);
+		if (carte instanceof Bataille)
+			return estDepotBatailleAutorise((Bataille) carte);
+		return false;
 	}
 }

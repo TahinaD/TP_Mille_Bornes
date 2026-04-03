@@ -20,9 +20,7 @@ public class Joueur {
 	
 	@Override
     public boolean equals(Object obj) {
-        if (obj instanceof Joueur joueur2)
-            return (nom != null && nom.equals(joueur2.nom));
-        return false;
+		return obj instanceof Joueur joueur && joueur.nom == nom;
     }
 
 	public MainJoueur getMainJoueur() {
@@ -41,6 +39,10 @@ public class Joueur {
 	
 	public void deposer(Carte carte) {
 		zoneJeu.deposer(carte);
+	}
+	
+	public boolean estDepotAutorise(Carte carte) {
+		return zoneJeu.estDepotAutorise(carte);
 	}
 
 }
