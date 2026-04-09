@@ -26,4 +26,8 @@ public class MainJoueur {
 		return "MainJoueur : " + listeCartes;
 	}
 
+	public List<Carte> getListeCartes() {
+		return listeCartes;
+	}
+
 }

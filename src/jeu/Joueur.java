@@ -1,5 +1,10 @@
 package jeu;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.Set;
+
 import cartes.Carte;
 
 public class Joueur {
@@ -43,6 +48,16 @@ public class Joueur {
 	
 	public boolean estDepotAutorise(Carte carte) {
 		return zoneJeu.estDepotAutorise(carte);
+	}
+	
+	public HashSet<Coup> coupsPossibles(Set<Joueur> participants) {
+		HashSet<Coup> coups = new HashSet<>();
+		for (Iterator<Joueur> iterJ = participants.iterator(); iterJ.hasNext();) {
+			for (ListIterator<Carte> iterM = (mainJoueur.getListeCartes()).listIterator(); iterM.hasNext();) {
+				
+			}
+		}
+		return coups;
 	}
 
 }

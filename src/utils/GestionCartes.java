@@ -10,6 +10,7 @@ public class GestionCartes {
 	private static Random rand = new Random();
 	
 	private GestionCartes() {
+		throw new IllegalStateException("Utility Class");
 	}
 
 	public static <E> E extraireList(List<E> list) {
